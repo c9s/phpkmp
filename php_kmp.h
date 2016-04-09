@@ -9,6 +9,8 @@
 
 #include <php.h>
 
+#define PHP_KMP_NAME "KMP"
+#define PHP_KMP_VERSION "1.0.0"
 #define PHP_KMP_PREFIX_RES_NAME "KMPPrefix"
 
 ZEND_BEGIN_MODULE_GLOBALS(kmp)

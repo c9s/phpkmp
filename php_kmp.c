@@ -55,14 +55,14 @@ static void php_kmp_prefix_persist_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 
 zend_module_entry kmp_module_entry = {
   STANDARD_MODULE_HEADER,
-  "KMP", // your extension name
+  PHP_KMP_NAME, // your extension name
   kmp_functions, // where you define your functions
   PHP_MINIT(kmp),
   PHP_MSHUTDOWN(kmp),
   NULL, // PHP_RINIT(kmp)
   NULL, // PHP_RSHUTDOWN(kmp)
   PHP_MINFO(kmp),
-  "0.1",
+  PHP_KMP_VERSION,
   STANDARD_MODULE_PROPERTIES
 };
 
