@@ -3,11 +3,11 @@
 
 int main()
 {
-    kmp_search_debug(STRLS("aabzabzabcz"), STRLS("aabaac"));
+  kmp_search_debug(STRLS("aabzabzabcz"), STRLS("aabaac"));
 
-    kmp_search_debug(STRLS("aabzabzabcz"), STRLS("abc"));
+  kmp_search_debug(STRLS("aabzabzabcz"), STRLS("abc"));
 
-    kmp_search_debug(STRLS("aabzabzabcz"), STRLS("abz"));
-    // F(STRLS("aaabcqzabcqz"));
-    return 0;
+  kmp_search_debug(STRLS("aabzabzabcz"), STRLS("abz"));
+  // F(STRLS("aaabcqzabcqz"));
+  return 0;
 }
