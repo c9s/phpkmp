@@ -20,7 +20,7 @@ static const zend_function_entry kmp_functions[] = {
 
 static void php_kmp_prefix_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
-  char *prefix = (char*)rsrc->ptr;
+  PType *prefix = (PType*)rsrc->ptr;
   if (prefix) {
     efree(prefix);
   }
@@ -28,7 +28,7 @@ static void php_kmp_prefix_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 
 static void php_kmp_prefix_persist_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
-  char *prefix = (char*)rsrc->ptr;
+  PType *prefix = (PType*)rsrc->ptr;
   if (prefix) {
     pefree(prefix, 1);
   }
@@ -79,7 +79,6 @@ PHP_FUNCTION(kmp_prefix) {
 
   PType *p = ecalloc(needle_len, sizeof(PType));
   F(needle, needle_len, p);
-  efree(p);
 
   // This register the resource with the type (le_kmp_prefix) 
   // The type is related to the dtor function for freeing the resource.
@@ -102,7 +101,7 @@ PHP_FUNCTION(kmp_search_p) {
     RETURN_FALSE;
   }
 
-  // This will convert zval (zprefix) to prefix (char*)
+  // This will convert zval (zprefix) to prefix (PType*)
   // Default id is -1
   ZEND_FETCH_RESOURCE2(prefix, PType*, &zprefix, -1,
       PHP_KMP_PREFIX_RES_NAME,
