@@ -1,5 +1,9 @@
 # KMP string match algorithm implementation
 
+## Requirement
+
+- PHP ^5.3
+
 ## Usage
 
 `kmp_search(haystack, needle)`
