@@ -1,0 +1,22 @@
+language: php
+
+php:
+- 5.6
+- 5.5
+- 5.4
+
+env:
+- NO_INTERACTION=1
+
+compiler:
+- gcc
+
+install:
+- sudo apt-get update -qq
+- sudo apt-get install -qq automake pkg-config build-essential libtool automake autoconf m4 gnulib php5-dev
+
+script:
+- phpize
+- ./configure
+- make
+- make test
