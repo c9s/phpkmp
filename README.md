@@ -15,7 +15,7 @@ make install
 
 ## Usage
 
-`kmp_search(haystack, needle)`
+### `kmp_search(haystack, needle)`
 
 Return value: (int) This function returns -1 if `needle` is not found in `haystack`.
 
@@ -23,7 +23,7 @@ Return value: (int) This function returns -1 if `needle` is not found in `haysta
 $pos = kmp_search("zjifeoabcabcjiefjie", "abcabc");
 ```
 
-`kmp_prefix(needle)`
+### `kmp_prefix(needle)`
 
 Return value: (resource) This function returns a resource of pre-computed prefixes array.
 
