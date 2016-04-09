@@ -17,17 +17,20 @@ make install
 
 `kmp_search(haystack, needle)`
 
+Return value: (int) This function returns -1 if `needle` is not found in `haystack`.
+
 ```php
 $pos = kmp_search("zjifeoabcabcjiefjie", "abcabc");
 ```
 
 `kmp_prefix(needle)`
 
+Return value: (resource) This function returns a resource of pre-computed prefixes array.
+
 ```php
 $prefix = kmp_prefix("abcabc");
 $pos = kmp_search_prefix("zjifeoabcabcjiefjie", $prefix);
 ```
-
 
 ## References
 
