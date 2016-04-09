@@ -11,10 +11,25 @@ int le_kmp_prefix_persist;
 
 ZEND_DECLARE_MODULE_GLOBALS(kmp)
 
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_kmp_search, 0, 0, 2)
+  ZEND_ARG_INFO(0, haystack)
+  ZEND_ARG_INFO(0, needle)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_kmp_prefix, 0, 0, 1)
+  ZEND_ARG_INFO(0, needle)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_kmp_search_prefix, 0, 0, 2)
+  ZEND_ARG_INFO(0, needle)
+  ZEND_ARG_INFO(0, prefi)
+ZEND_END_ARG_INFO()
+
 static const zend_function_entry kmp_functions[] = {
-  PHP_FE(kmp_search, NULL)
-  PHP_FE(kmp_search_prefix, NULL)
-  PHP_FE(kmp_prefix, NULL)
+  PHP_FE(kmp_search, arginfo_kmp_search)
+  PHP_FE(kmp_search_prefix, arginfo_kmp_prefix)
+  PHP_FE(kmp_prefix, arginfo_kmp_search_prefix)
   PHP_FE_END
 };
 
