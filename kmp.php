@@ -6,6 +6,13 @@
  * @license     MIT
  */
 
+class KMPPrefix {
+    public $P;
+    public $str;
+    public $len;
+}
+
+
 function kmp_compute_prefix($P) {
     $m = strlen($P);
     $pi = array();
@@ -23,11 +30,13 @@ function kmp_compute_prefix($P) {
     return $pi;
 }
 
-function kmp_match($T, $P) {
-    $array = array();
+function kmp_search_prefix($T, KMPPrefix $prefix)
+{
+    $matches = array();
+    $P = $prefix->str;
+    $m = $prefix->len;
+    $pi = $prefix->P;
     $n = strlen($T);
-    $m = strlen($P);
-    $pi = kmp_compute_prefix($P);
     $q = 0;
     $l = 0;
     for ($i = 0; $i < $n; $i++) {
@@ -38,16 +47,24 @@ function kmp_match($T, $P) {
             $q = $q + 1;
         }
         if ($q == $m) {
-            $array[] = $i - $m + 1;
+            $matches[] = $i - $m + 1;
             $l = $i;
             $q = $pi[$q];
         }
     }
-    return $array;
+    return $matches;
+}
+
+function kmp_search($T, $P) {
+    $prefix = new KMPPrefix;
+    $prefix->P = kmp_compute_prefix($P);
+    $prefix->str = $P;
+    $prefix->len = strlen($P);
+    return kmp_search_prefix($T, $prefix);
 }
 
 /*
-$matches = kmp_match($T, $P);
-*/
-$matches = kmp_match('abcdejdijdwojd', 'jdijd');
+$matches = kmp_search($T, $P);
+$matches = kmp_search('abcdejdijdwojd', 'jdijd');
 var_dump($matches);
+*/
