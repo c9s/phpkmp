@@ -4,6 +4,15 @@
 
 - PHP ^5.3
 
+## Install
+
+```sh
+phpize 
+make
+make install
+```
+
+
 ## Usage
 
 `kmp_search(haystack, needle)`
