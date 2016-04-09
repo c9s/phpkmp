@@ -1,5 +1,7 @@
 # KMP string match algorithm
 
+[![Build Status](https://travis-ci.org/c9s/phpkmp.svg?branch=master)](https://travis-ci.org/c9s/phpkmp)
+
 ## Requirement
 
 - PHP ^5.3
