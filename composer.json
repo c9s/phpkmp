@@ -1,0 +1,17 @@
+{
+    "name": "algo/kmp",
+    "homepage": "http://github.com/c9s/phpkmp",
+    "description": "KMP string search algorithm",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": { },
+    "license": "MIT",
+    "authors": [
+        { "name": "Yo-An Lin", "email": "cornelius.howl@gmail.com" }
+    ],
+    "autoload": {
+        "files": [ "kmp.php" ]
+    },
+    "version": "1.0.0"
+}
