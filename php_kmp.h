@@ -22,6 +22,6 @@ PHP_MSHUTDOWN_FUNCTION(kmp);
 PHP_MINFO_FUNCTION(kmp);
 
 PHP_FUNCTION(kmp_search);
-PHP_FUNCTION(kmp_search_p);
+PHP_FUNCTION(kmp_search_prefix);
 PHP_FUNCTION(kmp_prefix);
 #endif

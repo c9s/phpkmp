@@ -30,8 +30,9 @@ static void debug_match(const char *str, int i, int j)
  * @param str the string
  * @param len length of the string
  */
-void F_debug(const char *str, unsigned int len, PType P[]) {
-  unsigned int i = 1;
+void F_debug(const char *str, uint32_t len, KMPPrefix *prefix) {
+  uint32_t i = 1;
+  uint32_t * P = prefix->prefixes;
   int j = P[0] = 0; // longest prefix length
   P[1] = 0;
   for (; i < len ; i++) {

@@ -13,23 +13,25 @@ ZEND_DECLARE_MODULE_GLOBALS(kmp)
 
 static const zend_function_entry kmp_functions[] = {
   PHP_FE(kmp_search, NULL)
-  PHP_FE(kmp_search_p, NULL)
+  PHP_FE(kmp_search_prefix, NULL)
   PHP_FE(kmp_prefix, NULL)
   PHP_FE_END
 };
 
 static void php_kmp_prefix_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
-  PType *prefix = (PType*)rsrc->ptr;
+  KMPPrefix *prefix = (KMPPrefix*)rsrc->ptr;
   if (prefix) {
+    efree(prefix->P);
     efree(prefix);
   }
 }
 
 static void php_kmp_prefix_persist_dtor(zend_rsrc_list_entry *rsrc TSRMLS_DC)
 {
-  PType *prefix = (PType*)rsrc->ptr;
+  KMPPrefix *prefix = (KMPPrefix*)rsrc->ptr;
   if (prefix) {
+    pefree(prefix->P, 1);
     pefree(prefix, 1);
   }
 }
@@ -69,46 +71,46 @@ resource entry.
 */
 PHP_FUNCTION(kmp_prefix) {
   char *needle;
-  int needle_len;
+  int len;
 
   if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s",
-      &needle, &needle_len) == FAILURE)
+      &needle, &len) == FAILURE)
   {
       RETURN_FALSE;
   }
 
-  PType *p = ecalloc(needle_len, sizeof(PType));
-  F(needle, needle_len, p);
+  KMPPrefix *prefix = emalloc(sizeof(KMPPrefix));
+  prefix->P = ecalloc(len, sizeof(uint32_t));
+  prefix->str = zend_strndup(needle, len);
+  prefix->len = len;
+  F(needle, len, prefix);
 
   // This register the resource with the type (le_kmp_prefix) 
   // The type is related to the dtor function for freeing the resource.
-  ZEND_REGISTER_RESOURCE(return_value, p, le_kmp_prefix);
+  ZEND_REGISTER_RESOURCE(return_value, prefix, le_kmp_prefix);
 }
 
 
-PHP_FUNCTION(kmp_search_p) {
+PHP_FUNCTION(kmp_search_prefix) {
   char *haystack;
   int haystack_len;
 
-  char *needle;
-  int needle_len;
-
-  PType *prefix;
+  KMPPrefix *prefix;
   zval *zprefix;
 
-  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssr",
-        &haystack, &haystack_len, &needle, &needle_len, &zprefix) == FAILURE) {
+  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sr",
+        &haystack, &haystack_len, &zprefix) == FAILURE) {
     RETURN_FALSE;
   }
 
   // This will convert zval (zprefix) to prefix (PType*)
   // Default id is -1
-  ZEND_FETCH_RESOURCE2(prefix, PType*, &zprefix, -1,
+  ZEND_FETCH_RESOURCE2(prefix, KMPPrefix*, &zprefix, -1,
       PHP_KMP_PREFIX_RES_NAME,
       le_kmp_prefix,
       le_kmp_prefix_persist);
 
-  int p = kmp_search_p(haystack, haystack_len, needle, needle_len, prefix);
+  int p = kmp_search_prefix(haystack, haystack_len, prefix);
   RETURN_LONG(p);
 }
 
@@ -126,4 +128,5 @@ PHP_FUNCTION(kmp_search) {
     int p = kmp_search(haystack, haystack_len, needle, needle_len);
     RETURN_LONG(p);
 }
+
 

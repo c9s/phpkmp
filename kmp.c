@@ -8,8 +8,21 @@
 #include <stdlib.h>
 #include "kmp.h"
 
-void F(const char *str, unsigned int len, PType P[]) {
-  unsigned int i = 1;
+KMPPrefix * kmp_prefix_new(const char *needle, uint32_t len)
+{
+  KMPPrefix *prefix = malloc(sizeof(KMPPrefix));
+  prefix->P = calloc(sizeof(uint32_t), len);
+  prefix->str = needle;
+  prefix->len = len;
+  return prefix;
+}
+
+
+
+
+void F(const char *str, uint32_t len, KMPPrefix *prefix) {
+  uint32_t *P = prefix->P;
+  uint32_t i = 1;
   int j = P[0] = 0; // longest prefix length
   P[1] = 0;
   for (; i < len ; i++) {
@@ -24,15 +37,18 @@ void F(const char *str, unsigned int len, PType P[]) {
 }
 
 
-int kmp_search_p(
+int kmp_search_prefix(
   const char *search,
   const int search_len,
-  const char *needle,
-  const int needle_len,
-  PType P[])
+  KMPPrefix *prefix)
 {
-  unsigned int j = 0;
-  for (unsigned int i = 0; i < search_len ; i++) {
+  const char *needle = prefix->str;
+  const int needle_len = prefix->len;
+
+
+  uint32_t *P = prefix->P;
+  uint32_t j = 0;
+  for (uint32_t i = 0; i < search_len ; i++) {
     while (j > 0 && search[i] != needle[j]) {
       j = P[j+1];
     }
@@ -52,7 +68,11 @@ int kmp_search(
   const char *needle,
   const int needle_len)
 {
-  PType P[needle_len];
-  F(needle, needle_len, P);
-  return kmp_search_p(search, search_len, needle, needle_len, P);
+  uint32_t P[needle_len];
+  KMPPrefix prefix;
+  prefix.P = P;
+  prefix.str = needle;
+  prefix.len = needle_len;
+  F(needle, needle_len, &prefix);
+  return kmp_search_prefix(search, search_len, &prefix);
 }

@@ -5,12 +5,15 @@
 /*
   P structure for storing prefix-suffix lengths.
  */
+typedef uint32_t PType;
 typedef struct {
-  unsigned int * lengths;
-  unsigned int size;
-} P_;
+  uint32_t *P;
+  uint32_t len;
+  const char * str;
+} KMPPrefix;
 
-typedef unsigned int PType;
+KMPPrefix * kmp_prefix_new(const char *needle, uint32_t len);
+
 
 /*
   Failure function
@@ -21,7 +24,7 @@ typedef unsigned int PType;
   @param len the length of the haystack string.
   @return the position of the needle in the haystack string.
 */
-void F(const char *str, unsigned int len, PType P[]);
+void F(const char *str, uint32_t len, KMPPrefix *prefix);
 
 /**
   The main KMP string search function.
@@ -53,12 +56,10 @@ int kmp_search(
   @param P          the pre-computed P array.
   @return The position of needle in haystack string.
 */
-int kmp_search_p(
+int kmp_search_prefix(
   const char *search,
   const int search_len,
-  const char *needle,
-  const int needle_len,
-  PType P[]);
+  KMPPrefix *prefix);
 
 
 /**
