@@ -10,6 +10,13 @@ class KMPPrefix {
     public $P;
     public $str;
     public $len;
+
+    public function __construct($str, $len, array $P)
+    {
+        $this->str = $str;
+        $this->len = $len;
+        $this->P = $P;
+    }
 }
 
 
