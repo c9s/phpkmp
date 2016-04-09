@@ -2,6 +2,8 @@
 #define KMP_H
 
 
+#include <stdint.h>
+
 /*
   P structure for storing prefix-suffix lengths.
  */
