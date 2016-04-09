@@ -1,4 +1,4 @@
-# KMP string match algorithm implementation
+# KMP string match algorithm
 
 ## Requirement
 
@@ -15,17 +15,18 @@ make install
 
 ## Usage
 
-### `kmp_search(haystack, needle)`
+### `kmp_search(string haystack, string needle)`
 
-Return value: (int) This function returns -1 if `needle` is not found in `haystack`.
+Return value: (`int`) This function returns -1 if `needle` is not found in `haystack`.
 
 ```php
 $pos = kmp_search("zjifeoabcabcjiefjie", "abcabc");
 ```
 
-### `kmp_prefix(needle)`
+### `kmp_prefix(string needle)`
 
-Return value: (resource) This function returns a resource of pre-computed prefixes array.
+Return value: (`resource`) This function returns a resource of pre-computed prefixes array. The returned resource 
+can be reused when there are multiple haystacks to be searched.
 
 ```php
 $prefix = kmp_prefix("abcabc");
