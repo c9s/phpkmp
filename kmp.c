@@ -8,16 +8,7 @@
 #include <stdlib.h>
 #include "kmp.h"
 
-/*
-  Failure function
-
-  This function pre-compute the prefix-suffix length in an array.
-
-  @param str the haystack string.
-  @param len the length of the haystack string.
-  @return the position of the needle in the haystack string.
-*/
-void F(const char *str, unsigned int len, char P[]) {
+void F(const char *str, unsigned int len, PType P[]) {
   unsigned int i = 1;
   int j = P[0] = 0; // longest prefix length
   P[1] = 0;
@@ -38,7 +29,7 @@ int kmp_search_p(
   const int search_len,
   const char *needle,
   const int needle_len,
-  char P[])
+  PType P[])
 {
   unsigned int j = 0;
   for (unsigned int i = 0; i < search_len ; i++) {
@@ -61,7 +52,7 @@ int kmp_search(
   const char *needle,
   const int needle_len)
 {
-  char P[needle_len];
+  PType P[needle_len];
   F(needle, needle_len, P);
   return kmp_search_p(search, search_len, needle, needle_len, P);
 }

@@ -30,7 +30,7 @@ static void debug_match(const char *str, int i, int j)
  * @param str the string
  * @param len length of the string
  */
-void F_debug(const char *str, unsigned int len, char P[]) {
+void F_debug(const char *str, unsigned int len, PType P[]) {
   unsigned int i = 1;
   int j = P[0] = 0; // longest prefix length
   P[1] = 0;
